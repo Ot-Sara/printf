@@ -35,17 +35,14 @@ int _printf(const char *format, ...)
 		{
 			p = va_arg(ap, char *);
 			if (p == NULL)
-			{
-				exit(2);
+			{	exit(2);
 				return (0); }
 			while (*p)
-			{
-				write(1, p, 1);
+			{	write(1, p, 1);
 				len++;
 				p++; } }
 		else if ((*format == 'd' || *format == 'i') && *(format - 1) == '%')
-		{
-			nbr = va_arg(ap, int);
+		{	nbr = va_arg(ap, int);
 			len = _printf(len, nbr); }
 		format++; }
 	va_end(ap);
