@@ -64,9 +64,10 @@ int _print_int(int len, int n)
 			len++;
 			nbr = nbr % i; }
 		i = 1; }
-	c = (nbr % 10) + '0';
-	write(1, &c, 1);
-	len++;
+	if (nbr != 0)
+	{	c = (nbr % 10) + '0';
+		write(1, &c, 1);
+		len++; }
 	return (len);
 }
 
