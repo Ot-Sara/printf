@@ -21,56 +21,19 @@ int _print_NULL(int len)
 	len = len + 6;
 	return (len);
 }
-
 /**
- * _print_int - prints integer
+ * _print_char- prints charcacter
  * @len: length of what preceds
- * @n: integer to print
- * Return: new length after printing string
+ * @p: pointer to char
+ *
+ * Return: new length after printing
  */
-
-int _print_int(int len, int n)
+int _print_char(int len, const char *p)
 {
-	unsigned int n1 = n;
-	int nbr, i = 1;
-	char c;
-
-	if (n < 0)
-	{
-		c = '-';
-		write(1, &c, 1);
-		len++;
-		n1 = -n1;
-	}
-	nbr = n1;
-	if (nbr < 10)
-	{	c = nbr + '0';
-		write(1, &c, 1);
-		len++;
-		return (len); }
-	while (nbr >= 10)
-	{
-		while (nbr >= 10)
-		{	nbr = nbr / 10;
-			i = i * 10; }
-		c = nbr + '0';
-		write(1, &c, 1);
-		len++;
-		nbr = n1 % i;
-		while (nbr < (i / 10))
-		{	i = i / 10;
-			c = '0';
-			write(1, &c, 1);
-			len++;
-			nbr = nbr % i; }
-		i = 1; }
-	if (nbr != 0)
-	{	c = (nbr % 10) + '0';
-		write(1, &c, 1);
-		len++; }
+	write(1, p, 1);
+	len++;
 	return (len);
 }
-
 /**
  * _print_string - prints string
  * @len: length of what preceds
@@ -109,19 +72,20 @@ int _printf(const char *format, ...)
 	{
 		if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == 'i'))
 		{	n = va_arg(ap, int);
-			len = _print_int(len, n);
+			if (n >= 0)
+				len = _print_positif_int(len, n);
+			else
+				len = _print_negatif_int(len, n);
 			format++; }
 		else if (*format == '%' && *(format - 1) != '%' && *(format + 1) == '\0')
 			return (-1);
 		else if (*format == '%' && *(format + 1) == '%' && (*(format + 2) !=
 		's' && *(format + 2) != 'c' && *(format + 2) != 'd' && *(format + 2) != 'i'))
-		{	write(1, format, 1);
-			len++;
+		{	len = _print_char(len, format);
 			format++; }
 		else if (*format == '%' && *(format + 1) == 'c')
 		{	c = va_arg(ap, int);
-			write(1, &c, 1);
-			len++;
+			len = _print_char(len, &c);
 			format++; }
 		else if (*format == '%' && *(format + 1) == 's')
 		{	p = va_arg(ap, char *);
@@ -134,8 +98,8 @@ int _printf(const char *format, ...)
 			*format == 'd' || *format == 'i') && *(format - 1) == '%')
 			format++;
 		else
-		{	write(1, format, 1);
-			len++;
-			format++; } }
+		{	len = _print_char(len, format);
+			format++; }
+	}
 	va_end(ap);
 	return (len); }
