@@ -62,7 +62,7 @@ int _print_int(int len, int n)
 			c = '0';
 			write(1, &c, 1);
 			len++;
-			nbr = nbr % 10; }
+			nbr = nbr % i; }
 		i = 1; }
 	c = (nbr % 10) + '0';
 	write(1, &c, 1);
