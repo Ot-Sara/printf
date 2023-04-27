@@ -4,19 +4,6 @@
 #include <stdlib.h>
 
 /**
- * _print_char- prints charcacter
- * @len: length of what preceds
- * @p: pointer to char
- *
- * Return: new length after printing
- */
-int _print_char(int len, const char *p)
-{
-	write(1, p, 1);
-	len++;
-	return (len);
-}
-/**
  * _printf-prints
  * @format: const pointer to char
  * ...: arguments
