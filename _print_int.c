@@ -88,7 +88,7 @@ int _print_positif_int(int len, int n)
 	if (nbr != 0)
 	{	c = (nbr % 10) + '0';
 		write(1, &c, 1);
-		len++; 
+		len++;
 	}
 	return (len);
 }

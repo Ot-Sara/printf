@@ -12,7 +12,7 @@
 int _print_NULL(int len)
 {
 	char *c = "(null)";
-	
+
 	while (*c)
 	{
 		write(1, c, 1);
