@@ -44,33 +44,26 @@ int _print_int(int len, int n)
 	}
 	nbr = n1;
 	if (nbr < 10)
-	{
-		c = nbr + '0';
+	{	c = nbr + '0';
 		write(1, &c, 1);
 		len++;
-		return (len);
-	}
+		return (len); }
 	while (nbr >= 10)
 	{
 		while (nbr >= 10)
-		{
-			nbr = nbr / 10;
-			i = i * 10;
-		}
+		{	nbr = nbr / 10;
+			i = i * 10; }
 		c = nbr + '0';
 		write(1, &c, 1);
 		len++;
 		nbr = n1 % i;
 		while (nbr < (i / 10))
-		{
-			i = i / 10;
+		{	i = i / 10;
 			c = '0';
 			write(1, &c, 1);
 			len++;
-			nbr = nbr % 10;
-		}
-		i = 1;
-	}
+			nbr = nbr % 10; }
+		i = 1; }
 	c = (nbr % 10) + '0';
 	write(1, &c, 1);
 	len++;
