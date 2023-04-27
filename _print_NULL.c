@@ -18,6 +18,6 @@ int _print_NULL(int len)
 		write(1, c, 1);
 		c++;
 	}
-	len = len = 6;
+	len = len + 6;
 	return (len);
 }

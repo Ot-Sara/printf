@@ -4,24 +4,6 @@
 #include <stdlib.h>
 
 /**
- * _print_NULL- prints null
- * @len: length of what preceds
- *
- * Return: new length after printing
- */
-int _print_NULL(int len)
-{
-	char *c = "(null)";
-
-	while (*c)
-	{
-		write(1, c, 1);
-		c++;
-	}
-	len = len + 6;
-	return (len);
-}
-/**
  * _print_char- prints charcacter
  * @len: length of what preceds
  * @p: pointer to char
@@ -34,24 +16,6 @@ int _print_char(int len, const char *p)
 	len++;
 	return (len);
 }
-/**
- * _print_string - prints string
- * @len: length of what preceds
- * @p: string to print
- * Return: new length after printing string
- */
-
-int _print_string(int len, char *p)
-{
-	while (*p)
-	{
-		write(1, p, 1);
-		len++;
-		p++;
-	}
-	return (len);
-}
-
 /**
  * _printf-prints
  * @format: const pointer to char
