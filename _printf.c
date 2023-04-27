@@ -42,6 +42,7 @@ int _print_int(int len, int n)
 		c = (nbr % 10) + '0';
 		write(1, &c, 1);
 		len++;
+		return (len);
 	}
 	while (nbr >= 10)
 	{
