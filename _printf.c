@@ -37,6 +37,12 @@ int _print_int(int len, int n)
 		n1 = -n1;
 	}
 	nbr = n1;
+	if (nbr < 10)
+	{
+		c = (nbr % 10) + '0';
+		write(1, &c, 1);
+		len++;
+	}
 	while (nbr >= 10)
 	{
 		while (nbr >= 10)
