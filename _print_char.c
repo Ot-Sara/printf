@@ -1,23 +1,18 @@
 #include "main.h"
 #include <stdarg.h>
 #include <unistd.h>
-#include <stdlib.h>
+#include <stdlin.h>
 
 /**
- * _print_NULL - prints null
+ * _print_char - prints characters
  * @len: length of what preceds
+ * @p: pointer to char
  * Return: new length after printing
  */
 
-int _print_NULL(int len)
+int _print_char(int len, const char *p)
 {
-	char *c = "(null)";
-
-	while (*c)
-	{
-		write(1, c, 1);
-		c++;
-	}
-	len = len + 6;
+	write(1, p, 1);
+	len++;
 	return (len);
 }
