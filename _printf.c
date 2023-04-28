@@ -5,7 +5,7 @@
 #include <stdio.h>
 /**
  * _convert_ui_b- prints the unsigned int argument is converted to binary
- * @nbr: integer to convert
+ * @n: integer to convert
  * @len: length of what preceds
  *
  * Return: new length after printing
@@ -14,31 +14,45 @@ int _convert_ui_b(int len, int n)
 {
 	int *p;
 	char b;
-	int i = 0, j = 0, nbr = n;
+	int i = 0, j = 0, nbr, ov = 1;
+	unsigned int n1;
 
-	while (n > 0)
+	if (n < 0)
+		n1 = -n;
+	else
+		n1 = n;
+	nbr = n1;
+	while (n1 > 0)
 	{
-		n = n / 2;
+		n1 = n1 / 2;
 		i++;
 	}
 	p = malloc(sizeof(int) * i);
 	while (nbr > 0)
-	{
-		p[j] = nbr % 2;
+	{	p[j] = nbr % 2;
 		nbr = nbr / 2;
-		j++;
-	}
+		if (n < 0)
+		{	if ((p[j] == 0) && (ov == 0))
+			{	p[j] = 1;
+				ov = 0; }
+			else if ((p[j] == 0) && (ov == 1))
+			{	p[j] = 0;
+				ov = 1; }
+			else if ((p[j] == 1) && (ov == 0))
+			{	p[j] = 0;
+				ov = 0; }
+			else
+			{	p[j] = 1;
+				ov = 0; } }
+		j++; }
 	j--;
 	while (j >= 0)
-	{
-		b = p[j] + '0';
+	{	b = p[j] + '0';
 		write(1, &b, 1);
 		len++;
-		j--;
-	}
+		j--; }
 	free(p);
-	return (len);
-}
+	return (len); }
 /**
  * _printf-prints
  * @format: const pointer to char
