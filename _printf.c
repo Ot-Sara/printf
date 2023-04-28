@@ -32,6 +32,8 @@ int _convert_ui_b(int len, long int n)
 	{	n = n / 2;
 		i++; }
 	p = malloc(sizeof(int) * i);
+	if (p == NULL)
+		return (len);
 	while (nbr > 0)
 	{	p[j] = nbr % 2;
 		nbr = nbr / 2;
