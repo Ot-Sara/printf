@@ -3,64 +3,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 /**
- * _convert_ui_b- prints the unsigned int argument is converted to binary
- * @n: integer to convert
- * @len: length of what preceds
- *
- * Return: new length after printing
- */
-int _convert_ui_b(int len, long int n)
-{
-	int *p;
-	char b;
-	int i = 0, j = 0;
-	long int nbr/**, ov = 1*/;
-	/**unsigned int n1;*/
-
-	if (n == 0)
-	{	b = '0';
-		write(1, &b, 1);
-		len++;
-		return (len); }
-	/**if (n < 0)
-		n1 = -n;
-	else
-		n1 = n;
-	nbr = n1;*/
-	nbr = n;
-	while (n > 0)
-	{	n = n / 2;
-		i++; }
-	p = malloc(sizeof(int) * i);
-	if (p == NULL)
-		return (len);
-	while (nbr > 0)
-	{	p[j] = nbr % 2;
-		nbr = nbr / 2;
-		/**if (n < 0)
-		{	if ((p[j] == 0) && (ov == 0))
-			{	p[j] = 1;
-				ov = 0; }
-			else if ((p[j] == 0) && (ov == 1))
-			{	p[j] = 0;
-				ov = 1; }
-			else if ((p[j] == 1) && (ov == 0))
-			{	p[j] = 0;
-				ov = 0; }
-			else
-			{	p[j] = 1;
-				ov = 0; } }*/
-		j++; }
-	j--;
-	while (j >= 0)
-	{	b = p[j] + '0';
-		write(1, &b, 1);
-		len++;
-		j--; }
-	free(p);
-	p = NULL;
-	return (len); }
-/**
  * _printf-prints
  * @format: const pointer to char
  * ...: arguments
