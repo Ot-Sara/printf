@@ -10,4 +10,5 @@ int _print_NULL(int len);
 int _print_char(int len, const char *p);
 int _convert_ui_b(int len, long int n);
 int _convert_oct(int len, long int n);
+int _convert_hex(int len, long int n);
 #endif /* MAIN_H */
