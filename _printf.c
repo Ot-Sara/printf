@@ -9,31 +9,33 @@
  *
  * Return: new length after printing
  */
-int _convert_ui_b(int len, int n)
+int _convert_ui_b(int len, long int n)
 {
 	int *p;
 	char b;
-	int i = 0, j = 0, nbr, ov = 1;
-	unsigned int n1;
+	int i = 0, j = 0;
+	long int nbr/**, ov = 1*/;
+	/**unsigned int n1;*/
 
 	if (n == 0)
 	{	b = '0';
 		write(1, &b, 1);
 		len++;
 		return (len); }
-	if (n < 0)
+	/**if (n < 0)
 		n1 = -n;
 	else
 		n1 = n;
-	nbr = n1;
-	while (n1 > 0)
-	{	n1 = n1 / 2;
+	nbr = n1;*/
+	nbr = n;
+	while (n > 0)
+	{	n = n / 2;
 		i++; }
 	p = malloc(sizeof(int) * i);
 	while (nbr > 0)
 	{	p[j] = nbr % 2;
 		nbr = nbr / 2;
-		if (n < 0)
+		/**if (n < 0)
 		{	if ((p[j] == 0) && (ov == 0))
 			{	p[j] = 1;
 				ov = 0; }
@@ -45,7 +47,7 @@ int _convert_ui_b(int len, int n)
 				ov = 0; }
 			else
 			{	p[j] = 1;
-				ov = 0; } }
+				ov = 0; } }*/
 		j++; }
 	j--;
 	while (j >= 0)
@@ -66,6 +68,7 @@ int _printf(const char *format, ...)
 {	int n, len = 0;
 	char c, *p;
 	va_list ap;
+	long int ui;
 
 	if (format == NULL || *format == '\0')
 		return (-1);
@@ -97,8 +100,9 @@ int _printf(const char *format, ...)
 				len = _print_string(len, p);
 			format++; }
 		else if (*format == '%' && *(format + 1) == 'b')
-		{	n = va_arg(ap, int);
-			len = _convert_ui_b(len, n);
+		{	
+			ui = va_arg(ap, long int);
+			len = _convert_ui_b(len, ui);
 			format++; }
 
 		else if ((*format == 'c' || *format == 's' || *format == '%' ||
