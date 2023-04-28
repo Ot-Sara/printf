@@ -2,7 +2,6 @@
 #include <stdarg.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <stdio.h>
 /**
  * _convert_ui_b- prints the unsigned int argument is converted to binary
  * @n: integer to convert
@@ -18,22 +17,18 @@ int _convert_ui_b(int len, int n)
 	unsigned int n1;
 
 	if (n == 0)
-	{
-		b = '0';
+	{	b = '0';
 		write(1, &b, 1);
 		len++;
-		return (len);
-	}
+		return (len); }
 	if (n < 0)
 		n1 = -n;
 	else
 		n1 = n;
 	nbr = n1;
 	while (n1 > 0)
-	{
-		n1 = n1 / 2;
-		i++;
-	}
+	{	n1 = n1 / 2;
+		i++; }
 	p = malloc(sizeof(int) * i);
 	while (nbr > 0)
 	{	p[j] = nbr % 2;
