@@ -23,7 +23,7 @@ int _convert_ui_b(int len, long int n)
 		len++;
 		return (len); }
 	nbr = n;
-	while (n < 0)
+	while (n > 0)
 	{
 		n = n / 2;
 		i++; }
