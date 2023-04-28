@@ -2,7 +2,43 @@
 #include <stdarg.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdio.h>
+/**
+ * _convert_ui_b- prints the unsigned int argument is converted to binary
+ * @nbr: integer to convert
+ * @len: length of what preceds
+ *
+ * Return: new length after printing
+ */
+int _convert_ui_b(int len, int n)
+{
+	int *p;
+	char b;
+	int i = 0, j = 0, nbr = n;
 
+	while (n > 0)
+	{
+		n = n / 2;
+		i++;
+	}
+	p = malloc(sizeof(int) * i);
+	while (nbr > 0)
+	{
+		p[j] = nbr % 2;
+		nbr = nbr / 2;
+		j++;
+	}
+	j--;
+	while (j >= 0)
+	{
+		b = p[j] + '0';
+		write(1, &b, 1);
+		len++;
+		j--;
+	}
+	free(p);
+	return (len);
+}
 /**
  * _printf-prints
  * @format: const pointer to char
@@ -10,7 +46,6 @@
  *
  * Return: Integer
  */
-
 int _printf(const char *format, ...)
 {	int n, len = 0;
 	char c, *p;
@@ -20,8 +55,7 @@ int _printf(const char *format, ...)
 		return (-1);
 	va_start(ap, format);
 	while (*format)
-	{
-		if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == 'i'))
+	{	if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == 'i'))
 		{	n = va_arg(ap, int);
 			if (n >= 0)
 				len = _print_positif_int(len, n);
@@ -30,8 +64,9 @@ int _printf(const char *format, ...)
 			format++; }
 		else if (*format == '%' && *(format - 1) != '%' && *(format + 1) == '\0')
 			return (-1);
-		else if (*format == '%' && *(format + 1) == '%' && (*(format + 2) !=
-		's' && *(format + 2) != 'c' && *(format + 2) != 'd' && *(format + 2) != 'i'))
+		else if (*format == '%' && *(format + 1) == '%' && (*(format + 2) != 's' &&
+		*(format + 2) != 'c' && *(format + 2) != 'd' && *(format + 2) != 'i' &&
+		*(format + 2) != 'b'))
 		{	len = _print_char(len, format);
 			format++; }
 		else if (*format == '%' && *(format + 1) == 'c')
@@ -45,12 +80,16 @@ int _printf(const char *format, ...)
 			else
 				len = _print_string(len, p);
 			format++; }
+		else if (*format == '%' && *(format + 1) == 'b')
+		{	n = va_arg(ap, int);
+			len = _convert_ui_b(len, n);
+			format++; }
+
 		else if ((*format == 'c' || *format == 's' || *format == '%' ||
-			*format == 'd' || *format == 'i') && *(format - 1) == '%')
+		*format == 'd' || *format == 'i' || *format == 'b') && *(format - 1) == '%')
 			format++;
 		else
 		{	len = _print_char(len, format);
-			format++; }
-	}
+			format++; } }
 	va_end(ap);
 	return (len); }
