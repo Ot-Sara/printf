@@ -19,13 +19,17 @@ int _printf(const char *format, ...)
 		return (-1);
 	va_start(ap, format);
 	while (*format)
-	{	if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == 'i' || *(format + 1) == 'u'))
+	{	if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == 'i'))
 		{	n = va_arg(ap, int);
 			if (n >= 0)
 				len = _print_positif_int(len, n);
 			else
 				len = _print_negatif_int(len, n);
 			format++; }
+		if (*format == '%' && *(format + 1) == 'u')
+		{	ui = va_arg(ap, long int);
+			len = _print_positif_int(len, ui);
+                        format++; }
 		else if (*format == '%' && *(format - 1) != '%' && *(format + 1) == '\0')
 			return (-1);
 		else if (*format == '%' && *(format + 1) == '%' && (*(format + 2) != 's' &&
