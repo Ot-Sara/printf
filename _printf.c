@@ -56,6 +56,7 @@ int _convert_ui_b(int len, long int n)
 		len++;
 		j--; }
 	free(p);
+	p = NULL;
 	return (len); }
 /**
  * _printf-prints
