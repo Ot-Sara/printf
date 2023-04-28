@@ -19,7 +19,7 @@ int _printf(const char *format, ...)
 		return (-1);
 	va_start(ap, format);
 	while (*format)
-	{	if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == 'i'))
+	{	if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == 'i' || *(format + 1) == 'u'))
 		{	n = va_arg(ap, int);
 			if (n >= 0)
 				len = _print_positif_int(len, n);
@@ -30,7 +30,7 @@ int _printf(const char *format, ...)
 			return (-1);
 		else if (*format == '%' && *(format + 1) == '%' && (*(format + 2) != 's' &&
 		*(format + 2) != 'c' && *(format + 2) != 'd' && *(format + 2) != 'i' &&
-		*(format + 2) != 'b'))
+		*(format + 2) != 'b' && *(format + 2) != 'u'))
 		{	len = _print_char(len, format);
 			format++; }
 		else if (*format == '%' && *(format + 1) == 'c')
@@ -51,7 +51,7 @@ int _printf(const char *format, ...)
 			format++; }
 
 		else if ((*format == 'c' || *format == 's' || *format == '%' ||
-		*format == 'd' || *format == 'i' || *format == 'b') && *(format - 1) == '%')
+		*format == 'd' || *format == 'i' || *format == 'b' || *format == 'u') && *(format - 1) == '%')
 			format++;
 		else
 		{	len = _print_char(len, format);
