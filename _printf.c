@@ -17,6 +17,13 @@ int _convert_ui_b(int len, int n)
 	int i = 0, j = 0, nbr, ov = 1;
 	unsigned int n1;
 
+	if (n == 0)
+	{
+		b = '0';
+		write(1, &b, 1);
+		len++;
+		return (len);
+	}
 	if (n < 0)
 		n1 = -n;
 	else
