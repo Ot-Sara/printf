@@ -96,10 +96,11 @@ int _printf(const char *format, ...)
 	long int ui;
 
 	if (format == NULL || *format == '\0')
-		return (-1);
+		return (0);
 	va_start(ap, format);
 	while (*format)
-	{	if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == 'i'))
+	{
+		if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == 'i'))
 		{	n = va_arg(ap, int);
 			if (n >= 0)
 				len = _print_positif_int(len, n);
