@@ -13,4 +13,5 @@ int _convert_oct(int len, long int n);
 int _convert_hex(int len, long int n);
 int _convert_HEX(int len, long int n);
 int _print_s_specifier(int len, char *p);
+int _print_nil(int len);
 #endif /* MAIN_H */

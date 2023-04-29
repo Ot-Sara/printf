@@ -2,7 +2,28 @@
 #include <stdarg.h>
 #include <unistd.h>
 #include <stdlib.h>
-
+/**
+ * _print_nil- prints (nil)
+ * @len: length of what preceds
+ *
+ * Return: new length after printing
+ */
+int _print_nil(int len)
+{
+	char c;
+	c = '(';
+	write(1,&c,1);
+	c = 'n';
+	write(1,&c,1);
+	c = 'i';
+	write(1,&c,1);
+	c = 'l';
+	write(1,&c,1);
+	c = ')';
+	write(1,&c,1);
+	len = len + 5;
+	return (len);
+}
 /**
  * _printf-prints
  * @format: const pointer to char
@@ -36,7 +57,7 @@ int _printf(const char *format, ...)
 			return (-1);
 		else if (*format == '%' && *(format + 1) == '%' && (*(format + 2) != 's' &&
 		*(format + 2) != 'c' && *(format + 2) != 'd' && *(format + 2) != 'i' &&
-		*(format + 2) != 'b' && *(format + 2) != 'u' && *(format + 2) != 'o' && *(format + 2) != 'x' && *(format + 2) != 'X' && *(format + 2) != 'S'))
+		*(format + 2) != 'b' && *(format + 2) != 'u' && *(format + 2) != 'o' && *(format + 2) != 'x' && *(format + 2) != 'X' && *(format + 2) != 'S' && *(format + 2) != 'p'))
 		{	len = _print_char(len, format);
 			format++; }
 		else if (*format == '%' && *(format + 1) == 'c')
@@ -77,10 +98,25 @@ int _printf(const char *format, ...)
 			else
 				len = _print_s_specifier(len, p);
 			format++; }
+		else if (*format == '%' && *(format + 1) == 'p')
+		{
+			ui = va_arg(ap, long int);
+			if (ui == 0)
+				len = _print_nil(len);
+			else
+			{	c = '0';
+				write(1, &c, 1);
+				c = 'x';
+				write(1,&c,1);
+				len = len + 2;
+				len = _convert_hex(len, ui);
+			}
+			format++;
+		}
 
 
 		else if ((*format == 'c' || *format == 's' || *format == '%' ||
-		*format == 'd' || *format == 'i' || *format == 'b' || *format == 'u' || *format == 'o' || *format == 'x' || *format == 'X' || *format == 'S') && *(format - 1) == '%')
+		*format == 'd' || *format == 'i' || *format == 'b' || *format == 'u' || *format == 'o' || *format == 'x' || *format == 'X' || *format == 'S' || *format == 'p') && *(format - 1) == '%')
 			format++;
 		else
 		{	len = _print_char(len, format);
