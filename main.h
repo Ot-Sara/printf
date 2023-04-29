@@ -12,4 +12,5 @@ int _convert_ui_b(int len, long int n);
 int _convert_oct(int len, long int n);
 int _convert_hex(int len, long int n);
 int _convert_HEX(int len, long int n);
+int _print_s_specifier(int len, char *p);
 #endif /* MAIN_H */

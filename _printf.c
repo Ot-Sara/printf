@@ -2,118 +2,43 @@
 #include <stdarg.h>
 #include <unistd.h>
 #include <stdlib.h>
-/**
- * _convert_HEX - converts in hexadecimal en UPPER CASE and prints
- * @n: integer to convert
+
+/**_print_s_specifier- prints string and handle Non printable characters
  * @len: length of what preceds
+ * @p: pointer to char
+ *
  * Return: new length after printing
  */
-int _convert_HEX(int len, long int n)
+int _print_s_specifier(int len, char *p)
 {
-	int *p;
-	char b;
-	int i = 0, j = 0;
-	long int nbr;
+	char c;
 
-	if (n == 0)
+	while (*p)
 	{
-		b = '0';
-		write(1, &b, 1);
-		len++;
-		return (len); }
-	nbr = n;
-	while (n > 0)
-	{
-		n = n / 16;
-		i++; }
-	p = malloc(sizeof(int) * i);
-	if (p == NULL)
-		return (len);
-	while (nbr > 0)
-	{
-		p[j] = nbr % 16;
-		nbr = nbr / 16;
-		j++; }
-	j--;
-	while (j >= 0)
-	{
-		if (p[j] <= 9)
-			b = p[j] + '0';
-		else if (p[j] == 10)
-			b = 'A';
-		else if (p[j] == 11)
-			b = 'B';
-		else if (p[j] == 12)
-			b = 'C';
-		else if (p[j] == 13)
-			b = 'D';
-		else if (p[j] == 14)
-			b = 'E';
+		if (*p >= 32 && *p < 127)
+		{	write(1, p, 1);
+			len++;
+		}
 		else
-			b = 'F';
-		write(1, &b, 1);
-		len++;
-		j--; }
-	free(p);
-	p = NULL;
-	return (len); }
+		{
+			c = '\\';
+			write (1, &c, 1);
+			len++;
+			c = 'x';
+			write (1, &c, 1);
+			if (*p <= 15)
+			{
+				c = '0';
+				write(1, &c, 1);
+			}
+			len = _convert_HEX(len, *p);
+			len--;
+		}	
+		p++;
+	}
+	return (len);
 
-/**
- * _convert_hex - converts in hexadecimal and prints
- * @n: integer to convert
- * @len: length of what preceds
- * Return: new length after printing
- */
-int _convert_hex(int len, long int n)
-{
-	int *p;
-	char b;
-	int i = 0, j = 0;
-	long int nbr;
-
-	if (n == 0)
-	{
-		b = '0';
-		write(1, &b, 1);
-		len++;
-		return (len); }
-	nbr = n;
-	while (n > 0)
-	{
-		n = n / 16;
-		i++; }
-	p = malloc(sizeof(int) * i);
-	if (p == NULL)
-		return (len);
-	while (nbr > 0)
-	{
-		p[j] = nbr % 16;
-		nbr = nbr / 16;
-		j++; }
-	j--;
-	while (j >= 0)
-	{
-		if (p[j] <= 9)
-			b = p[j] + '0';
-		else if (p[j] == 10)
-			b = 'a';
-		else if (p[j] == 11)
-			b = 'b';
-		else if (p[j] == 12)
-			b = 'c';
-		else if (p[j] == 13)
-			b = 'd';
-		else if (p[j] == 14)
-			b = 'e';
-		else
-			b = 'f';
-		write(1, &b, 1);
-		len++;
-		j--; }
-	free(p);
-	p = NULL;
-	return (len); }
-
+}
 /**
  * _convert_oct - converts in octal and prints
  * @n: integer to convert
@@ -188,7 +113,7 @@ int _printf(const char *format, ...)
 			return (-1);
 		else if (*format == '%' && *(format + 1) == '%' && (*(format + 2) != 's' &&
 		*(format + 2) != 'c' && *(format + 2) != 'd' && *(format + 2) != 'i' &&
-		*(format + 2) != 'b' && *(format + 2) != 'u' && *(format + 2) != 'o' && *(format + 2) != 'x' && *(format + 2) != 'X'))
+		*(format + 2) != 'b' && *(format + 2) != 'u' && *(format + 2) != 'o' && *(format + 2) != 'x' && *(format + 2) != 'X' && *(format + 2) != 'S'))
 		{	len = _print_char(len, format);
 			format++; }
 		else if (*format == '%' && *(format + 1) == 'c')
@@ -222,10 +147,17 @@ int _printf(const char *format, ...)
 			ui = va_arg(ap, long int);
 			len = _convert_HEX(len, ui);
 			format++; }
+		else if (*format == '%' && *(format + 1) == 'S')
+		{	p = va_arg(ap, char *);
+			if (p == NULL)
+				len = _print_NULL(len);
+			else
+				len = _print_s_specifier(len, p);
+			format++; }
 
 
 		else if ((*format == 'c' || *format == 's' || *format == '%' ||
-		*format == 'd' || *format == 'i' || *format == 'b' || *format == 'u' || *format == 'o' || *format == 'x' || *format == 'X') && *(format - 1) == '%')
+		*format == 'd' || *format == 'i' || *format == 'b' || *format == 'u' || *format == 'o' || *format == 'x' || *format == 'X' || *format == 'S') && *(format - 1) == '%')
 			format++;
 		else
 		{	len = _print_char(len, format);
