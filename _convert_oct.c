@@ -38,3 +38,9 @@ int _convert_oct(int len, long int n)
 	while (j >= 0)
 	{
 		b = p[j] + '0';
+		write(1, &b, 1);
+		len++;
+		j--; }
+	free(p);
+	p = NULL;
+	return (len); }
