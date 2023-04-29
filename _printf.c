@@ -26,13 +26,14 @@ int _print_s_specifier(int len, char *p)
 			len++;
 			c = 'x';
 			write (1, &c, 1);
+			len++;
 			if (*p <= 15)
 			{
 				c = '0';
 				write(1, &c, 1);
+				len++;
 			}
 			len = _convert_HEX(len, *p);
-			len--;
 		}	
 		p++;
 	}
