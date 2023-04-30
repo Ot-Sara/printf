@@ -127,7 +127,7 @@ int _printf(const char *format, ...)
 			}
 			format++;
 		}
-		else if (*format == '%' && (*(format + 1) == ' ' || *(format + 1) == '+' )&& (*(format + 2) == 'd' || *(format + 2) == 'i'))
+		else if ((*format == '%' && (*(format + 1) == ' ' || *(format + 1) == '+' )&& (*(format + 2) == 'd' || *(format + 2) == 'i')))
 		{
 			n = va_arg(ap, int);
 			if (n >= 0)
