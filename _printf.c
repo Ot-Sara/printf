@@ -151,17 +151,21 @@ int _printf(const char *format, ...)
 			{
 				c = 'x';
 				write(1, &c, 1);
+				len++;
 				len = _convert_hex(len, ui);
 			}
 			else if ((ui != 0) && (*(format + 2) == 'X'))
 			{
 				c = 'X';
 				write(1, &c, 1);
+				len++;
 				len = _convert_HEX(len, ui);
 			}
 			else if ((ui != 0) && (*(format + 2) == 'o'))
+			{	
+				
 				len = _convert_oct(len, ui);
-			len++;
+			}
 			format++;
 		}
 	
