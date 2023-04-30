@@ -48,7 +48,7 @@ int _printf(const char *format, ...)
 
 		else if (*format == '%' && *(format + 1) == '%' && (*(format + 2) != 's' &&
 		*(format + 2) != 'c' && *(format + 2) != 'd' && *(format + 2) != 'i' &&
-		*(format + 2) != 'b' && *(format + 2) != 'u' && *(format + 2) != 'o' && *(format + 2) != 'x' && *(format + 2) != 'X' && *(format + 2) != 'S' && *(format + 2) != 'p' && ((*(format + 2) != ' ' || *(format + 2) != '+') && (*(format + 3) != 'd' || *(format + 3) != 'i')) && (*(format + 2) != '#' && *(format + 3) != 'o')))
+		*(format + 2) != 'b' && *(format + 2) != 'u' && *(format + 2) != 'o' && *(format + 2) != 'x' && *(format + 2) != 'X' && *(format + 2) != 'S' && *(format + 2) != 'p' && ((*(format + 2) != ' ' || *(format + 2) != '+') && (*(format + 3) != 'd' || *(format + 3) != 'i')) && (*(format + 2) != '#' && (*(format + 3) != 'o' || *(format + 3) != 'x' || *(format + 3) != 'X'))))
 		{	len = _print_char(len, format);
 			format++; }
 
@@ -58,7 +58,7 @@ int _printf(const char *format, ...)
 			format++;
 
 
-		else if ((((*format == ' ' || *format == '+') && (*(format + 1) == 'd' || *(format + 1) == 'i')) || (*format == '#' && *(format + 1) == 'o')) && *(format - 1) == '%')
+		else if ((((*format == ' ' || *format == '+') && (*(format + 1) == 'd' || *(format + 1) == 'i')) || (*format == '#' && (*(format + 1) == 'o' || *(format + 1) == 'x' || *(format + 1) == 'X'))) && *(format - 1) == '%')
 			format = format + 2;
 
 
@@ -141,16 +141,30 @@ int _printf(const char *format, ...)
 				len = _print_negatif_int(len, n);
 			format++;
 		}
-		else if (*format == '%' && *(format + 1) == '#' && (*(format + 2) == 'o'))
+		else if (*format == '%' && *(format + 1) == '#' && (*(format + 2) == 'o' || *(format + 2) == 'x' || *(format + 2) == 'X'))
 		{
 			ui = va_arg(ap, long int);
 			c = '0';
 			write(1, &c, 1);
 			len++;
-			if (ui != 0)
+			if ((ui != 0) && (*(format + 2) == 'x'))
+			{
+				c = 'x';
+				write(1, &c, 1);
+				len = _convert_hex(len, ui);
+			}
+			else if ((ui != 0) && (*(format + 2) == 'X'))
+			{
+				c = 'X';
+				write(1, &c, 1);
+				len = _convert_HEX(len, ui);
+			}
+			else if ((ui != 0) && (*(format + 2) == 'o'))
 				len = _convert_oct(len, ui);
+			len++;
 			format++;
 		}
+	
 
 
 		else
