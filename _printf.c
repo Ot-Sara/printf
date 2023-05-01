@@ -38,7 +38,10 @@ int _printf(const char *format, ...)
 	long int ui;
 
 	if (format == NULL || *format == '\0')
+	{
+		exit(1);
 		return (0);
+	}
 	va_start(ap, format);
 	while (*format)
 	{
