@@ -73,7 +73,7 @@ int _printf(const char *format, ...)
 				len = _print_NULL(len);
 			else
 				len = _print_string(len, p);
-			format++; }
+			format = format + 2; }
 		else if (*format == '%' && *(format + 1) == 'b')
 		{	
 			ui = va_arg(ap, long int);
