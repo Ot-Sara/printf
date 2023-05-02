@@ -45,13 +45,17 @@ int _printf(const char *format, ...)
 	va_start(ap, format);
 	while (*format)
 	{
-		if (*format == '%' && *(format - 1) != '%' && *(format + 1) == '\0')
+		if (*format == '%' && (*(format + 1) == '\0' || (*(format + 1) == ' ' && *(format + 2) == '\0')))
+			
 			return (-1);
-		else if (*format == '%' && *(format + 1) == '%' && *(format - 1) != '%')
+		else if (*format == '%' && *(format + 1) == '%' && *(format + 2) != 'c' && *(format + 2) != 's' && *(format + 2) != 'd' && *(format + 2) != 'i' && *(format + 2) != 'u' && *(format + 2) != 'b' && *(format + 2) != 'o' && *(format + 2) != 'x' && *(format + 2) != 'X' && *(format + 2) != 'S' && *(format + 2) != 'p' && ((*(format + 2) != ' ' && *(format + 2) != '+') || (*(format + 3) != 'd' && *(format + 3) != 'i')) && ((*(format + 2) != ' ' || *(format + 3) != '+') && (*(format + 2) != '+' || *(format + 3) != ' ')) && (((*(format + 2) != ' ' || *(format + 3) != '+') && (*(format + 2) != '+' || *(format + 3) != ' ')) || (*(format + 4) != 'd' && *(format + 4) != 'i' ))  && ((*(format + 2) != '#') || (*(format + 3) != 'o' && *(format + 3) != 'x' && *(format + 3) != 'X')))
 		{	len = _print_char(len, format);
-			format++; }
-		else if (*format == '%' && *(format - 1) == '%' && (*(format + 1) != 'c' && *(format + 1) != 's' && *(format + 1) != 'd' && *(format + 1) != 'i' && *(format + 1) != 'u' && *(format + 1) != 'b' && *(format + 1) != 'o' && *(format + 1) != 'x' && *(format + 1) != 'X' && *(format + 1) != 'S' && *(format + 1) != 'p' && ((*(format + 1) != ' ' && *(format + 1) != '+') || (*(format + 2) != 'd' && *(format + 2) != 'i')) && (((*(format + 1) != ' ' || *(format + 2) != '+') && (*(format + 1) != '+' || *(format + 2) != ' ')) || (*(format + 3) != 'd' && *(format + 3) != 'i' )) && ((*(format + 1) != '#') || (*(format + 2) != 'o' && *(format + 2) != 'x' && *(format + 2) != 'X'))))
-			format++;
+			format = format + 2; }
+		else if (*format == '%' && *(format + 1) == ' ' && *(format + 2) == '%' && *(format + 3) == ' ' && ((*(format + 4) != 'd' && *(format + 4) != 'i') && (*(format + 4) != '+' || (*(format + 5) != 'd' && *(format + 5) != 'i')))) 
+		{	len = _print_char(len, format);
+			len = _print_char(len, format + 1);
+			format = format + 4;
+		}
 
 
 		else if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == 'i'))
