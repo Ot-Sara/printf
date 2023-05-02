@@ -48,7 +48,7 @@ int _printf(const char *format, ...)
 		if (*format == '%' && (*(format + 1) == '\0' || (*(format + 1) == ' ' && *(format + 2) == '\0')))
 			
 			return (-1);
-		else if (*format == '%' && *(format + 1) == '%' && *(format + 2) != 'c' && *(format + 2) != 's' && *(format + 2) != 'd' && *(format + 2) != 'i' && *(format + 2) != 'u' && *(format + 2) != 'b' && *(format + 2) != 'o' && *(format + 2) != 'x' && *(format + 2) != 'X' && *(format + 2) != 'S' && *(format + 2) != 'p' && (*(format + 2) != 'l' || (*(format + 3) != 'd' && *(format + 3) != 'i' && *(format + 3) != 'u')) && ((*(format + 2) != ' ' && *(format + 2) != '+') || (*(format + 3) != 'd' && *(format + 3) != 'i')) && ((*(format + 2) != ' ' || *(format + 3) != '+') && (*(format + 2) != '+' || *(format + 3) != ' ')) && (((*(format + 2) != ' ' || *(format + 3) != '+') && (*(format + 2) != '+' || *(format + 3) != ' ')) || (*(format + 4) != 'd' && *(format + 4) != 'i' ))  && ((*(format + 2) != '#') || (*(format + 3) != 'o' && *(format + 3) != 'x' && *(format + 3) != 'X')))
+		else if (*format == '%' && *(format + 1) == '%' && *(format + 2) != 'c' && *(format + 2) != 's' && *(format + 2) != 'd' && *(format + 2) != 'i' && *(format + 2) != 'u' && *(format + 2) != 'b' && *(format + 2) != 'o' && *(format + 2) != 'x' && *(format + 2) != 'X' && *(format + 2) != 'S' && *(format + 2) != 'p' && ((*(format + 2) != 'l' && *(format + 2) != 'h') || (*(format + 3) != 'd' && *(format + 3) != 'i' && *(format + 3) != 'u')) && ((*(format + 2) != ' ' && *(format + 2) != '+') || (*(format + 3) != 'd' && *(format + 3) != 'i')) && ((*(format + 2) != ' ' || *(format + 3) != '+') && (*(format + 2) != '+' || *(format + 3) != ' ')) && (((*(format + 2) != ' ' || *(format + 3) != '+') && (*(format + 2) != '+' || *(format + 3) != ' ')) || (*(format + 4) != 'd' && *(format + 4) != 'i' ))  && ((*(format + 2) != '#') || (*(format + 3) != 'o' && *(format + 3) != 'x' && *(format + 3) != 'X')))
 		{	len = _print_char(len, format);
 			format = format + 2; }
 		else if (*format == '%' && *(format + 1) == ' ' && *(format + 2) == '%' && *(format + 3) == ' ' && ((*(format + 4) != 'd' && *(format + 4) != 'i') && (*(format + 4) != '+' || (*(format + 5) != 'd' && *(format + 5) != 'i')))) 
@@ -65,7 +65,7 @@ int _printf(const char *format, ...)
 			else
 				len = _print_negatif_int(len, ui);
 			format = format + 2; }
-		else if (*format == '%' && *(format + 1) == 'l' && (*(format + 2) == 'd' || *(format + 2) == 'i'))
+		else if (*format == '%' && (*(format + 1) == 'l' || *(format + 1) == 'h') && (*(format + 2) == 'd' || *(format + 2) == 'i'))
 		{
 			ui = va_arg(ap, long int);
 			if (ui >= 0)
@@ -74,7 +74,7 @@ int _printf(const char *format, ...)
 				len = _print_negatif_int(len, ui);
 			format = format + 3;
 		}
-		else if (*format == '%' && *(format + 1) == 'l' && *(format + 2) == 'u')
+		else if (*format == '%' && (*(format + 1) == 'l' || *(format + 1) == 'h' ) && *(format + 2) == 'u')
 		{
 			ui = va_arg(ap, long int);
 			len = _print_positif_int(len, ui);
