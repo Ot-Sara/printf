@@ -65,6 +65,12 @@ int _printf(const char *format, ...)
 			else
 				len = _print_negatif_int(len, ui);
 			format = format + 2; }
+		else if (*format == '%' && (*(format + 1) == 'l' || *(format + 1) == 'h') && ( *(format + 2) != 'd' && *(format + 2) != 'i' && *(format + 2) != 'u' && *(format + 2) != 'o' && *(format + 2) != 'x' && *(format + 2) != 'X'))
+		{
+			len = _print_char(len, format);
+			format = format + 2;
+
+		}
 		else if (*format == '%' && (*(format + 1) == 'l' || *(format + 1) == 'h') && (*(format + 2) == 'd' || *(format + 2) == 'i'))
 		{
 			ui = va_arg(ap, long int);
