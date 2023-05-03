@@ -367,19 +367,42 @@ int _printf(const char *format, ...)
 		}
 		else if (*format == '%' && _isdigit(*(format + 1)) && (*(format + 2) == 'o' || *(format + 2) == 'x' || *(format + 2) == 'X'))
 		{	ui = va_arg(ap, long int);
-			ns = _to_add_oxX((*(format + 1) - 48), ui);
-			while (ns)
-			{	c = ' ';
-				write(1, &c, 1);
-				len++;
-				ns--;
-			}
 			if (*(format + 2) == 'o')
+			{	ns = _to_add_oxX((*(format + 1) - 48), ui);
+				while (ns)
+                        	{       c = ' ';
+                                	write(1, &c, 1);
+                                	len++;
+                                	ns--;
+                        	}
 				len = _convert_oct(len, ui);
+			}
 			else if (*(format + 2) == 'x')
+			{
+				ns = _to_add_oxX((*(format + 1) - 48), ui);
+				if (ns > 0 && ui > 9)
+					ns++;
+                                while (ns)
+                                {       c = ' ';
+                                        write(1, &c, 1);
+                                        len++;
+                                        ns--;
+                                }
 				len = _convert_hex(len, ui);
+			}
 			else
+			{	
+				ns = _to_add_oxX((*(format + 1) - 48), ui);
+				if (ns > 0 && ui > 9)
+					ns++;
+                                while (ns)
+                                {       c = ' ';
+                                        write(1, &c, 1);
+                                        len++;
+                                        ns--;
+                                }
 				len = _convert_HEX(len, ui);
+			}
 			format = format + 3;
 		}
 
