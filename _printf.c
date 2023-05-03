@@ -106,6 +106,22 @@ int _to_add_oxX(int fw, long int n)
 		return (fw - i);
 }
 /**
+ * to_add_stirn
+ */
+int to_add_string(int fw, char *s)
+{
+	int d = 0;
+	
+	while (*s)
+	{	s++;
+		d++;
+	}
+	if (d >= fw)
+		return (0);
+	else
+		return (fw - d);
+}
+/**
  * _isdigit- checks for a digit (0 through 9).
  * @c: Integer to check
  *
@@ -376,6 +392,23 @@ int _printf(const char *format, ...)
 				ns--;
 			}
 			len = _print_char(len, &c);
+			format = format + 3;
+		}
+		else if (*format == '%' && _isdigit(*(format + 1)) && *(format + 2) == 's')
+		{	p = va_arg(ap, char *);
+			if (p == NULL)
+				len = _print_NULL(len);
+			else
+			{	ns = to_add_string(*(format + 1) - 48, p);
+				while (ns)
+				{
+					c1 = ' ';
+					write(1, &c1, 1);
+					len++;
+					ns--;
+				}
+				len = _print_string(len, p);
+			}
 			format = format + 3;
 		}
 
