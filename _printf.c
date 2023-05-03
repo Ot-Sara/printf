@@ -90,6 +90,21 @@ int _to_add_neg(int fw, int n)
         else
                 return (fw - d);
 }
+int _to_add_oxX(int fw, long int n)
+{
+	int i = 0;
+
+	if (n == 0)
+		i++;
+	while (n > 0)
+	{
+		n = n / 8;
+		i++; }
+	if (fw <= i)
+		return (0);
+	else
+		return (fw - i);
+}
 /**
  * _isdigit- checks for a digit (0 through 9).
  * @c: Integer to check
@@ -338,6 +353,36 @@ int _printf(const char *format, ...)
 				len = _print_negatif_int(len, n);
 			}
 			format = format + 3; }
+		else if (*format == '%' && _isdigit(*(format + 1)) && *(format + 2) == 'u')
+		{	ui = va_arg(ap, long int);
+			ns = _to_add_pos((*(format + 1) - 48), ui);
+			while (ns)
+			{	c = ' ';
+				write(1, &c, 1);
+				len++;
+				ns--;
+			}
+			len = _print_positif_int(len, ui);
+			format = format + 3;
+		}
+		else if (*format == '%' && _isdigit(*(format + 1)) && (*(format + 2) == 'o' || *(format + 2) == 'x' || *(format + 2) == 'X'))
+		{	ui = va_arg(ap, long int);
+			ns = _to_add_oxX((*(format + 1) - 48), ui);
+			while (ns)
+			{	c = ' ';
+				write(1, &c, 1);
+				len++;
+				ns--;
+			}
+			if (*(format + 2) == 'o')
+				len = _convert_oct(len, ui);
+			else if (*(format + 2) == 'x')
+				len = _convert_hex(len, ui);
+			else
+				len = _convert_HEX(len, ui);
+			format = format + 3;
+		}
+
 
 		else
 		{	len = _print_char(len, format);
