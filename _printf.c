@@ -25,6 +25,95 @@ int _print_nil(int len)
 	return (len);
 }
 /**
+ * _to_add_pos- spaces to add to reach  field width
+ * @f_w:  field width
+ * ui: long int
+ *
+ * Return: number of spaces that should be printed
+ */
+int _to_add_pos(int fw, long int n)
+{
+	long int nbr;
+	int i = 1, d = 0;
+	
+	nbr = n;
+	if (nbr < 10)
+		d++;
+
+	while (nbr > 10)
+	{	while (nbr >= 10)
+		{	nbr = nbr / 10;
+			i = i * 10; }
+			d++;
+			nbr = n % i;
+			while (nbr < (i / 10))
+			{	i = i / 10;
+			d++;
+			nbr = nbr % i; }
+			i = 1; 
+	}
+	if (nbr != 0)
+		d++;
+	if (fw <= d)
+		return (0);
+	else
+		return (fw - d);
+}
+/**
+ * _to_add_neg
+ * */
+int _to_add_neg(int fw, int n)
+{
+	long int nbr;
+	int i = 1, d = 0;
+
+	d++;
+	nbr = n;
+	if (nbr > -10)
+		d++;
+	while (nbr / 10)
+	{
+		while (nbr / 10)
+		{	nbr = nbr / 10;
+			i = i * 10; }
+		d++;
+		nbr = n % i;
+		while (-nbr < (i / 10))
+		{	i = i / 10;
+			d++;
+			nbr = nbr % i; }
+		i = 1; }
+	if (nbr != 0)
+		d++;
+	if (fw <= d)
+                return (0);
+        else
+                return (fw - d);
+}
+/**
+ * _isdigit- checks for a digit (0 through 9).
+ * @c: Integer to check
+ *
+ * Return: 1 if c is a digit 0 otherwise
+ */
+int _isdigit(int c)
+{
+	int i = '0';
+	int find = 0;
+
+	while (i <= '9')
+	{
+		if (c == i)
+		{
+			find = 1;
+			break;
+		}
+		else
+			i++;
+	}
+	return (find);
+}
+/**
  * _printf-prints
  * @format: const pointer to char
  * ...: arguments
@@ -32,7 +121,7 @@ int _print_nil(int len)
  * Return: Integer
  */
 int _printf(const char *format, ...)
-{	int len = 0;
+{	int len = 0, ns, n;
 	char c, *p;
 	va_list ap;
 	long int ui;
@@ -48,7 +137,7 @@ int _printf(const char *format, ...)
 		if (*format == '%' && (*(format + 1) == '\0' || (*(format + 1) == ' ' && *(format + 2) == '\0')))
 			
 			return (-1);
-		else if (*format == '%' && *(format + 1) == '%' && *(format + 2) != 'c' && *(format + 2) != 's' && *(format + 2) != 'd' && *(format + 2) != 'i' && *(format + 2) != 'u' && *(format + 2) != 'b' && *(format + 2) != 'o' && *(format + 2) != 'x' && *(format + 2) != 'X' && *(format + 2) != 'S' && *(format + 2) != 'p' && ((*(format + 2) != 'l' && *(format + 2) != 'h') || (*(format + 3) != 'd' && *(format + 3) != 'i' && *(format + 3) != 'u' && *(format + 3) != 'o' && *(format + 3) != 'x' && *(format + 3) != 'X')) && ((*(format + 2) != ' ' && *(format + 2) != '+') || (*(format + 3) != 'd' && *(format + 3) != 'i')) && ((*(format + 2) != ' ' || *(format + 3) != '+') && (*(format + 2) != '+' || *(format + 3) != ' ')) && (((*(format + 2) != ' ' || *(format + 3) != '+') && (*(format + 2) != '+' || *(format + 3) != ' ')) || (*(format + 4) != 'd' && *(format + 4) != 'i' ))  && ((*(format + 2) != '#') || (*(format + 3) != 'o' && *(format + 3) != 'x' && *(format + 3) != 'X')))
+		else if (*format == '%' && *(format + 1) == '%' && *(format + 2) != 'c' && *(format + 2) != 's' && *(format + 2) != 'd' && *(format + 2) != 'i' && *(format + 2) != 'u' && *(format + 2) != 'b' && *(format + 2) != 'o' && *(format + 2) != 'x' && *(format + 2) != 'X' && *(format + 2) != 'S' && *(format + 2) != 'p' && ((*(format + 2) != 'l' && *(format + 2) != 'h' && !_isdigit(*(format + 1))) || (*(format + 3) != 'd' && *(format + 3) != 'i' && *(format + 3) != 'u' && *(format + 3) != 'o' && *(format + 3) != 'x' && *(format + 3) != 'X')) && ((*(format + 2) != ' ' && *(format + 2) != '+') || (*(format + 3) != 'd' && *(format + 3) != 'i')) && ((*(format + 2) != ' ' || *(format + 3) != '+') && (*(format + 2) != '+' || *(format + 3) != ' ')) && (((*(format + 2) != ' ' || *(format + 3) != '+') && (*(format + 2) != '+' || *(format + 3) != ' ')) || (*(format + 4) != 'd' && *(format + 4) != 'i' ))  && ((*(format + 2) != '#') || (*(format + 3) != 'o' && *(format + 3) != 'x' && *(format + 3) != 'X')))
 		{	len = _print_char(len, format);
 			format = format + 2; }
 		else if (*format == '%' && *(format + 1) == ' ' && *(format + 2) == '%' && *(format + 3) == ' ' && ((*(format + 4) != 'd' && *(format + 4) != 'i') && (*(format + 4) != '+' || (*(format + 5) != 'd' && *(format + 5) != 'i')))) 
@@ -59,11 +148,11 @@ int _printf(const char *format, ...)
 
 
 		else if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == 'i'))
-		{	ui = va_arg(ap, long int);
-			if (ui >= 0)
-				len = _print_positif_int(len, ui);
+		{	n = va_arg(ap, int);
+			if (n >= 0)
+				len = _print_positif_int(len, n);
 			else
-				len = _print_negatif_int(len, ui);
+				len = _print_negatif_int(len, n);
 			format = format + 2; }
 		else if (*format == '%' && (*(format + 1) == 'l' || *(format + 1) == 'h') && ( *(format + 2) != 'd' && *(format + 2) != 'i' && *(format + 2) != 'u' && *(format + 2) != 'o' && *(format + 2) != 'x' && *(format + 2) != 'X'))
 		{
@@ -179,7 +268,7 @@ int _printf(const char *format, ...)
 		}
 		else if (*format == '%' && (((*(format + 1) == ' ' && *(format + 2) == '+') || (*(format + 1) == '+' && *(format + 2) == ' ')) && (*(format + 3) == 'd' || *(format + 3) == 'i')))
 		{
-			ui = va_arg(ap, long int);
+			ui = va_arg(ap, int);
 			if (ui >= 0)
 			{
 				if (*(format + 1) == ' ')
@@ -224,8 +313,31 @@ int _printf(const char *format, ...)
 			}
 			format = format + 3;
 		}
-	
-
+		else if (*format == '%' && _isdigit(*(format + 1)) && (*(format + 2) == 'd' || *(format + 2) == 'i'))
+		{	n = va_arg(ap, int);
+			if (n >= 0)
+			{
+				ns = _to_add_pos((*(format + 1) - 48), n);
+				while (ns)
+				{	c = ' ';
+					write(1, &c, 1);
+					len++;
+					ns--;
+				}
+				len = _print_positif_int(len, n);
+			}
+			else
+			{
+				ns = _to_add_neg((*(format + 1) - 48), n);
+				while (ns)
+				{	c = ' ';
+					write(1, &c, 1);
+					len++;
+					ns--;
+				}
+				len = _print_negatif_int(len, n);
+			}
+			format = format + 3; }
 
 		else
 		{	len = _print_char(len, format);

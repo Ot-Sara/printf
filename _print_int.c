@@ -9,9 +9,9 @@
  *
  * Return: new length after printing
  */
-int _print_negatif_int(int len, long int n)
+int _print_negatif_int(int len, int n)
 {
-	long int nbr;
+	int nbr;
 	int i = 1;
 	char c;
 
@@ -59,12 +59,6 @@ int _print_positif_int(int len, long int n)
 	int i = 1;
 	char c;
 
-	if (n < 0)
-	{
-		c = '-';
-		write(1, &c, 1);
-		len++;
-	}
 	nbr = n;
 	if (nbr < 10)
 	{	c = nbr + '0';
