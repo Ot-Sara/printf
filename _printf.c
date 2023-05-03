@@ -25,7 +25,7 @@ int _print_nil(int len)
 	return (len);
 }
 /**
- * _to_add_pos- spaces to add to reach  field width
+ * _to_add_pos- spaces to add to reach field width for positif int
  * @f_w:  field width
  * ui: long int
  *
@@ -60,8 +60,12 @@ int _to_add_pos(int fw, long int n)
 		return (fw - d);
 }
 /**
- * _to_add_neg
- * */
+ * _to_add_pos- spaces to add to reach field width for negatif int
+ * @f_w:  field width
+ * ui: long int
+ *
+ * Return: number of spaces that should be printed
+ */
 int _to_add_neg(int fw, int n)
 {
 	long int nbr;
@@ -90,6 +94,13 @@ int _to_add_neg(int fw, int n)
         else
                 return (fw - d);
 }
+/**
+ * _to_add_oxX- spaces to add to reach field width for oct, hexa, and HEXA
+ * @fw: field width
+ * @n: number to print in (octal, hexadecimal or HEXADECIMAL)
+ *
+ * Return: number of spaces to print
+ */
 int _to_add_oxX(int fw, long int n)
 {
 	int i = 0;
@@ -106,9 +117,13 @@ int _to_add_oxX(int fw, long int n)
 		return (fw - i);
 }
 /**
- * to_add_stirn
+ * _to_add_string: spaces to add to reach field width
+ * @fw: field width
+ * @s: string to print
+ *
+ * Return: number of spaces to print
  */
-int to_add_string(int fw, char *s)
+int _to_add_string(int fw, char *s)
 {
 	int d = 0;
 	
@@ -152,7 +167,7 @@ int _isdigit(int c)
  * Return: Integer
  */
 int _printf(const char *format, ...)
-{	int len = 0, ns, n;
+{	int len = 0, ns, fw, n;
 	char c, c1, *p;
 	va_list ap;
 	long int ui;
@@ -168,7 +183,7 @@ int _printf(const char *format, ...)
 		if (*format == '%' && (*(format + 1) == '\0' || (*(format + 1) == ' ' && *(format + 2) == '\0')))
 			
 			return (-1);
-		else if (*format == '%' && *(format + 1) == '%' && *(format + 2) != 'c' && *(format + 2) != 's' && *(format + 2) != 'd' && *(format + 2) != 'i' && *(format + 2) != 'u' && *(format + 2) != 'b' && *(format + 2) != 'o' && *(format + 2) != 'x' && *(format + 2) != 'X' && *(format + 2) != 'S' && *(format + 2) != 'p' && ((*(format + 2) != 'l' && *(format + 2) != 'h' && !_isdigit(*(format + 1))) || (*(format + 3) != 'd' && *(format + 3) != 'i' && *(format + 3) != 'u' && *(format + 3) != 'o' && *(format + 3) != 'x' && *(format + 3) != 'X' && *(format + 3) != 'c' && *(format + 3) != 's')) && ((*(format + 2) != ' ' && *(format + 2) != '+') || (*(format + 3) != 'd' && *(format + 3) != 'i')) && ((*(format + 2) != ' ' || *(format + 3) != '+') && (*(format + 2) != '+' || *(format + 3) != ' ')) && (((*(format + 2) != ' ' || *(format + 3) != '+') && (*(format + 2) != '+' || *(format + 3) != ' ')) || (*(format + 4) != 'd' && *(format + 4) != 'i' ))  && ((*(format + 2) != '#') || (*(format + 3) != 'o' && *(format + 3) != 'x' && *(format + 3) != 'X')))
+		else if (*format == '%' && *(format + 1) == '%' && *(format + 2) != 'c' && *(format + 2) != 's' && *(format + 2) != 'd' && *(format + 2) != 'i' && *(format + 2) != 'u' && *(format + 2) != 'b' && *(format + 2) != 'o' && *(format + 2) != 'x' && *(format + 2) != 'X' && *(format + 2) != 'S' && *(format + 2) != 'p' && ((*(format + 2) != 'l' && *(format + 2) != 'h' && !_isdigit(*(format + 2)) && *(format + 2) != '*') || (*(format + 3) != 'd' && *(format + 3) != 'i' && *(format + 3) != 'u' && *(format + 3) != 'o' && *(format + 3) != 'x' && *(format + 3) != 'X')) && (!_isdigit(*(format + 2)) && (*(format + 3) != 'c' && *(format + 3) != 's'))&& ((*(format + 2) != ' ' && *(format + 2) != '+') || (*(format + 3) != 'd' && *(format + 3) != 'i')) && ((*(format + 2) != ' ' || *(format + 3) != '+') && (*(format + 2) != '+' || *(format + 3) != ' ')) && (((*(format + 2) != ' ' || *(format + 3) != '+') && (*(format + 2) != '+' || *(format + 3) != ' ')) || (*(format + 4) != 'd' && *(format + 4) != 'i' ))  && ((*(format + 2) != '#') || (*(format + 3) != 'o' && *(format + 3) != 'x' && *(format + 3) != 'X')))
 		{	len = _print_char(len, format);
 			format = format + 2; }
 		else if (*format == '%' && *(format + 1) == ' ' && *(format + 2) == '%' && *(format + 3) == ' ' && ((*(format + 4) != 'd' && *(format + 4) != 'i') && (*(format + 4) != '+' || (*(format + 5) != 'd' && *(format + 5) != 'i')))) 
@@ -369,6 +384,48 @@ int _printf(const char *format, ...)
 				len = _print_negatif_int(len, n);
 			}
 			format = format + 3; }
+		else if (*format == '%' && *(format + 1) == '*' && (*(format + 2) == 'd' || *(format + 2) == 'i'))
+		{	fw = va_arg(ap, int);
+			n = va_arg(ap, int);
+			if (n >= 0)
+			{
+				ns = _to_add_pos(fw, n);
+				while (ns)
+				{	c = ' ';
+					write(1, &c, 1);
+					len++;
+					ns--;
+				}
+				len = _print_positif_int(len, n);
+			}
+			else
+			{
+				ns = _to_add_neg(fw, n);
+				while (ns)
+				{	c = ' ';
+					write(1, &c, 1);
+					len++;
+					ns--;
+				}
+				len = _print_negatif_int(len, n);
+			}
+			format = format + 3; }
+		else if (*format == '%' && *(format + 1) == '*' && *(format + 2) == 'u')
+		{
+			fw = va_arg(ap, int);
+			ui = va_arg(ap, long int);
+			ns = _to_add_pos(fw, ui);
+			while (ns)
+			{
+				c = ' ';
+				write(1, &c, 1);
+				len++;
+				ns--;
+			}
+			len = _print_positif_int(len, ui);
+			format = format + 3;
+		}
+	
 		else if (*format == '%' && _isdigit(*(format + 1)) && *(format + 2) == 'u')
 		{	ui = va_arg(ap, long int);
 			ns = _to_add_pos((*(format + 1) - 48), ui);
@@ -399,7 +456,7 @@ int _printf(const char *format, ...)
 			if (p == NULL)
 				len = _print_NULL(len);
 			else
-			{	ns = to_add_string(*(format + 1) - 48, p);
+			{	ns = _to_add_string(*(format + 1) - 48, p);
 				while (ns)
 				{
 					c1 = ' ';
@@ -442,6 +499,43 @@ int _printf(const char *format, ...)
 				ns = _to_add_oxX((*(format + 1) - 48), ui);
 				if (ns > 0 && ui > 9)
 					ns++;
+                                while (ns)
+                                {       c = ' ';
+                                        write(1, &c, 1);
+                                        len++;
+                                        ns--;
+                                }
+				len = _convert_HEX(len, ui);
+			}
+			format = format + 3;
+		}
+		else if (*format == '%' && *(format + 1) == '*' && (*(format + 2) == 'o' || *(format + 2) == 'x' || *(format + 2) == 'X'))
+		{	fw = va_arg(ap, int);
+			ui = va_arg(ap, long int);
+			if (*(format + 2) == 'o')
+			{	ns = _to_add_oxX(fw, ui);
+				while (ns)
+                        	{       c = ' ';
+                                	write(1, &c, 1);
+                                	len++;
+                                	ns--;
+                        	}
+				len = _convert_oct(len, ui);
+			}
+			else if (*(format + 2) == 'x')
+			{
+				ns = _to_add_oxX(fw, ui);
+                                while (ns)
+                                {       c = ' ';
+                                        write(1, &c, 1);
+                                        len++;
+                                        ns--;
+                                }
+				len = _convert_hex(len, ui);
+			}
+			else
+			{	
+				ns = _to_add_oxX(fw, ui);
                                 while (ns)
                                 {       c = ' ';
                                         write(1, &c, 1);
