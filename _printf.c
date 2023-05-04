@@ -514,8 +514,6 @@ int _printf(const char *format, ...)
 			ui = va_arg(ap, long int);
 			if (*(format + 2) == 'o')
 			{	ns = _to_add_oxX(fw, ui);
-				if (ns > 0 && ui > 9)
-					ns++;
 				while (ns)
                         	{       c = ' ';
                                 	write(1, &c, 1);
@@ -540,6 +538,8 @@ int _printf(const char *format, ...)
 			else
 			{	
 				ns = _to_add_oxX(fw, ui);
+				if (ns > 0 && ui > 9)
+					ns++;
                                 while (ns)
                                 {       c = ' ';
                                         write(1, &c, 1);
