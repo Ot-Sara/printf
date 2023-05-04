@@ -183,7 +183,7 @@ int _printf(const char *format, ...)
 		if (*format == '%' && (*(format + 1) == '\0' || (*(format + 1) == ' ' && *(format + 2) == '\0')))
 			
 			return (-1);
-		else if (*format == '%' && *(format + 1) == '%' && *(format + 2) != 'c' && *(format + 2) != 's' && *(format + 2) != 'd' && *(format + 2) != 'i' && *(format + 2) != 'u' && *(format + 2) != 'b' && *(format + 2) != 'o' && *(format + 2) != 'x' && *(format + 2) != 'X' && *(format + 2) != 'S' && *(format + 2) != 'p' && ((*(format + 2) != 'l' && *(format + 2) != 'h' && !_isdigit(*(format + 2)) && *(format + 2) != '*') || (*(format + 3) != 'd' && *(format + 3) != 'i' && *(format + 3) != 'u' && *(format + 3) != 'o' && *(format + 3) != 'x' && *(format + 3) != 'X')) && (!_isdigit(*(format + 2)) && (*(format + 3) != 'c' && *(format + 3) != 's'))&& ((*(format + 2) != ' ' && *(format + 2) != '+') || (*(format + 3) != 'd' && *(format + 3) != 'i')) && ((*(format + 2) != ' ' || *(format + 3) != '+') && (*(format + 2) != '+' || *(format + 3) != ' ')) && (((*(format + 2) != ' ' || *(format + 3) != '+') && (*(format + 2) != '+' || *(format + 3) != ' ')) || (*(format + 4) != 'd' && *(format + 4) != 'i' ))  && ((*(format + 2) != '#') || (*(format + 3) != 'o' && *(format + 3) != 'x' && *(format + 3) != 'X')))
+		else if (*format == '%' && *(format + 1) == '%' && *(format + 2) != 'c' && *(format + 2) != 's' && *(format + 2) != 'd' && *(format + 2) != 'i' && *(format + 2) != 'u' && *(format + 2) != 'b' && *(format + 2) != 'o' && *(format + 2) != 'x' && *(format + 2) != 'X' && *(format + 2) != 'S' && *(format + 2) != 'p' && ((*(format + 2) != 'l' && *(format + 2) != 'h' && !_isdigit(*(format + 2)) && *(format + 2) != '*') || (*(format + 3) != 'd' && *(format + 3) != 'i' && *(format + 3) != 'u' && *(format + 3) != 'o' && *(format + 3) != 'x' && *(format + 3) != 'X')) && (!_isdigit(*(format + 2) && *(format + 2) != '*') && (*(format + 3) != 'c' && *(format + 3) != 's')) && ((*(format + 2) != ' ' && *(format + 2) != '+') || (*(format + 3) != 'd' && *(format + 3) != 'i')) && ((*(format + 2) != ' ' || *(format + 3) != '+') && (*(format + 2) != '+' || *(format + 3) != ' ')) && (((*(format + 2) != ' ' || *(format + 3) != '+') && (*(format + 2) != '+' || *(format + 3) != ' ')) || (*(format + 4) != 'd' && *(format + 4) != 'i' ))  && ((*(format + 2) != '#') || (*(format + 3) != 'o' && *(format + 3) != 'x' && *(format + 3) != 'X')))
 		{	len = _print_char(len, format);
 			format = format + 2; }
 		else if (*format == '%' && *(format + 1) == ' ' && *(format + 2) == '%' && *(format + 3) == ' ' && ((*(format + 4) != 'd' && *(format + 4) != 'i') && (*(format + 4) != '+' || (*(format + 5) != 'd' && *(format + 5) != 'i')))) 
@@ -451,12 +451,44 @@ int _printf(const char *format, ...)
 			len = _print_char(len, &c);
 			format = format + 3;
 		}
+		else if (*format == '%' && *(format + 1) == '*' && *(format + 2) == 'c')
+		{	ns = va_arg(ap, int);
+			c = va_arg(ap, int);
+			while (ns > 1)
+			{
+				c1 = ' ';
+				write(1, &c1, 1);
+				len++;
+				ns--;
+			}
+			len = _print_char(len, &c);
+			format = format + 3;
+		}
+
 		else if (*format == '%' && _isdigit(*(format + 1)) && *(format + 2) == 's')
 		{	p = va_arg(ap, char *);
 			if (p == NULL)
 				len = _print_NULL(len);
 			else
 			{	ns = _to_add_string(*(format + 1) - 48, p);
+				while (ns)
+				{
+					c1 = ' ';
+					write(1, &c1, 1);
+					len++;
+					ns--;
+				}
+				len = _print_string(len, p);
+			}
+			format = format + 3;
+		}
+		else if (*format == '%' && *(format + 1) == '*' && *(format + 2) == 's')
+		{	fw = va_arg(ap, int);
+			p = va_arg(ap, char *);
+			if (p == NULL)
+				len = _print_NULL(len);
+			else
+			{	ns = _to_add_string(fw, p);
 				while (ns)
 				{
 					c1 = ' ';
