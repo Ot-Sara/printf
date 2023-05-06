@@ -194,6 +194,26 @@ int _precision(int len, int pr, float b)
 	return (len);
 }
 */
+/**
+ * */
+int err(int len)
+{
+	char c = '0';
+	int i;
+
+	write(1, &c, 1);
+	len++;
+	c = 'x';
+	write(1, &c, 1);
+	len++;
+	c = 'f';
+	for(i = 0; i <= 15; i++)
+	{
+		write(1, &c, 1);
+		len++;
+	}
+	return(len);
+}
 
 /**
  * _printf-prints
@@ -347,6 +367,8 @@ int _printf(const char *format, ...)
 			ui = va_arg(ap, long int);
 			if (ui == 0)
 				len = _print_nil(len);
+			else if (ui == -1)
+				len = err(len);
 			else
 			{	c = '0';
 				write(1, &c, 1);
