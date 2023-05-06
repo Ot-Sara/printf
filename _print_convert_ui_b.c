@@ -11,37 +11,31 @@
  */
 int _convert_ui_b(int len, long int n)
 {
-	int *p;
-	char b;
-	int i = 0, j = 0;
-	long int nbr;
+	long int p = 1;
+	char c;
 
-	if (n == 0)
+	if (n == 0 || n == 1)
 	{
-		b = '0';
-		write(1, &b, 1);
+		c = n + '0';
+		write(1, &c, 1);
 		len++;
-		return (len); }
-	nbr = n;
-	while (n > 0)
-	{
-		n = n / 2;
-		i++; }
-	p = malloc(sizeof(int) * i);
-	if (p == NULL)
 		return (len);
-	while (nbr > 0)
-	{
-		p[j] = nbr % 2;
-		nbr = nbr / 2;
-		j++; }
-	j--;
-	while (j >= 0)
-	{
-		b = p[j] + '0';
-		write(1, &b, 1);
+	}
+	while (n >= p)
+		p = p * 2;
+	p = p / 2;
+	while (p != 0 && n > 0)
+	{	n = n - p;
+		c = '1';
+		write(1, &c, 1);
 		len++;
-		j--; }
-	free(p);
-	p = NULL;
-	return (len); }
+		p = p / 2;
+		while (p != 0 && n < p)
+		{	c = '0';
+			write(1, &c, 1);
+			len++;
+			p = p / 2;
+		}
+	}
+	return (len);
+}
