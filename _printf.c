@@ -317,13 +317,6 @@ int _printf(const char *format, ...)
 				ui = ui - UINT_MAX - 1;
 			len = _convert_oct(len, ui);
 			format = format + 2; }
-		else if (*format == '%' && (*(format + 1) == 'l' || *(format + 1) == 'h' ) && *(format + 2) == 'o')
-		{
-			ui = va_arg(ap, long int);
-			len = _convert_oct(len, ui);
-			format = format + 3;
-
-		}
 		else if (*format == '%' && *(format + 1) == 's')
 		{	p = va_arg(ap, char *);
 			if (p == NULL)
@@ -333,8 +326,8 @@ int _printf(const char *format, ...)
 			format = format + 2; }
 		else if (*format == '%' && (*(format + 1) == 'l' || *(format + 1) == 'h' ) && *(format + 2) == 'o')
 		{
-			ui = va_arg(ap, long int);
-			len = _convert_oct(len, ui);
+			n = va_arg(ap, unsigned long int);
+			len = _convert_oct(len, n);
 			format = format + 3;
 
 		}
@@ -347,8 +340,8 @@ int _printf(const char *format, ...)
 			format = format + 2; }
 		else if (*format == '%' && (*(format + 1) == 'l' || *(format + 1) == 'h' ) && *(format + 2) == 'x')
 		{
-			ui = va_arg(ap, long int);
-			len = _convert_hex(len, ui);
+			n = va_arg(ap, unsigned long int);
+			len = _convert_hex(len, n);
 			format = format + 3;
 		}
 		else if (*format == '%' && *(format + 1) == 'X')
@@ -360,8 +353,8 @@ int _printf(const char *format, ...)
 			format = format + 2; }
 		else if (*format == '%' && (*(format + 1) == 'l' || *(format + 1) == 'h' ) && *(format + 2) == 'X')
 		{
-			ui = va_arg(ap, long int);
-			len = _convert_HEX(len, ui);
+			n = va_arg(ap, unsigned long int);
+			len = _convert_HEX(len, n);
 			format = format + 3;
 		}
 		else if (*format == '%' && *(format + 1) == 'S')
