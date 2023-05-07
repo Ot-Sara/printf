@@ -67,7 +67,7 @@ int _to_add_pos(int fw, long int n)
  *
  * Return: number of spaces that should be printed
  */
-int _to_add_neg(int fw, int n)
+int _to_add_neg(int fw, long int n)
 {
 	long int nbr;
 	int i = 1, d = 0;
@@ -223,11 +223,12 @@ int err(int len)
  * Return: Integer
  */
 int _printf(const char *format, ...)
-{	int len = 0, ns, fw, n/**, pr*/;
+{	int len = 0, ns, fw/** n, pr*/;
 	char c, c1, *p;
 	/**float b;*/
 	va_list ap;
 	long int ui;
+	unsigned long n;
 
 	if (format == NULL || *format == '\0')
 	{
@@ -266,9 +267,7 @@ int _printf(const char *format, ...)
 			if (ui >= 0)
 				len = _print_positif_int(len, ui);
 			else
-			{	printf("%ld ici", ui);
 				len = _print_negatif_int(len, ui);
-			}
 			format = format + 2; }
 		else if (*format == '%' && (*(format + 1) == 'l' || *(format + 1) == 'h') && ( *(format + 2) != 'd' && *(format + 2) != 'i' && *(format + 2) != 'u' && *(format + 2) != 'o' && *(format + 2) != 'x' && *(format + 2) != 'X'))
 		{
@@ -287,8 +286,10 @@ int _printf(const char *format, ...)
 		}
 		else if (*format == '%' && (*(format + 1) == 'l' || *(format + 1) == 'h' ) && *(format + 2) == 'u')
 		{
-			ui = va_arg(ap, long int);
-			len = _print_positif_int(len, ui);
+			n = va_arg(ap, unsigned long int);
+			if (n > UINT_MAX)
+				n = n - UINT_MAX - 1;
+			len = _print_positif_int(len, n);
 			format = format + 3;
 		}
 		else if (*format == '%' && *(format + 1) == 'u')
@@ -403,7 +404,7 @@ int _printf(const char *format, ...)
 		}
 		else if (*format == '%' && (((*(format + 1) == ' ' && *(format + 2) == '+') || (*(format + 1) == '+' && *(format + 2) == ' ')) && (*(format + 3) == 'd' || *(format + 3) == 'i')))
 		{
-			ui = va_arg(ap, int);
+			ui = va_arg(ap, long int);
 			if (ui >= 0)
 			{
 				if (*(format + 1) == ' ')
@@ -449,54 +450,54 @@ int _printf(const char *format, ...)
 			format = format + 3;
 		}
 		else if (*format == '%' && _isdigit(*(format + 1)) && (*(format + 2) == 'd' || *(format + 2) == 'i'))
-		{	n = va_arg(ap, int);
-			if (n >= 0)
+		{	ui = va_arg(ap, long int);
+			if (ui >= 0)
 			{
-				ns = _to_add_pos((*(format + 1) - 48), n);
+				ns = _to_add_pos((*(format + 1) - 48), ui);
 				while (ns)
 				{	c = ' ';
 					write(1, &c, 1);
 					len++;
 					ns--;
 				}
-				len = _print_positif_int(len, n);
+				len = _print_positif_int(len, ui);
 			}
 			else
 			{
-				ns = _to_add_neg((*(format + 1) - 48), n);
+				ns = _to_add_neg((*(format + 1) - 48), ui);
 				while (ns)
 				{	c = ' ';
 					write(1, &c, 1);
 					len++;
 					ns--;
 				}
-				len = _print_negatif_int(len, n);
+				len = _print_negatif_int(len, ui);
 			}
 			format = format + 3; }
 		else if (*format == '%' && *(format + 1) == '*' && (*(format + 2) == 'd' || *(format + 2) == 'i'))
 		{	fw = va_arg(ap, int);
-			n = va_arg(ap, int);
-			if (n >= 0)
+			ui = va_arg(ap, long int);
+			if (ui >= 0)
 			{
-				ns = _to_add_pos(fw, n);
+				ns = _to_add_pos(fw, ui);
 				while (ns)
 				{	c = ' ';
 					write(1, &c, 1);
 					len++;
 					ns--;
 				}
-				len = _print_positif_int(len, n);
+				len = _print_positif_int(len, ui);
 			}
 			else
 			{
-				ns = _to_add_neg(fw, n);
+				ns = _to_add_neg(fw, ui);
 				while (ns)
 				{	c = ' ';
 					write(1, &c, 1);
 					len++;
 					ns--;
 				}
-				len = _print_negatif_int(len, n);
+				len = _print_negatif_int(len, ui);
 			}
 			format = format + 3; }
 		else if (*format == '%' && *(format + 1) == '*' && *(format + 2) == 'u')
