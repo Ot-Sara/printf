@@ -223,7 +223,7 @@ int err(int len)
  * Return: Integer
  */
 int _printf(const char *format, ...)
-{	int len = 0, ns, fw/** n, pr*/;
+{	int len = 0, ns, fw, nbr/**,pr*/;
 	char c, c1, *p;
 	/**float b;*/
 	va_list ap;
@@ -263,11 +263,11 @@ int _printf(const char *format, ...)
 
 
 		else if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == 'i'))
-		{	ui = va_arg(ap, long int);
-			if (ui >= 0)
-				len = _print_positif_int(len, ui);
+		{	nbr = va_arg(ap, int);
+			if (nbr >= 0)
+				len = _print_positif_int(len, nbr);
 			else
-				len = _print_negatif_int(len, ui);
+				len = _print_negatif_int(len, nbr);
 			format = format + 2; }
 		else if (*format == '%' && (*(format + 1) == 'l' || *(format + 1) == 'h') && ( *(format + 2) != 'd' && *(format + 2) != 'i' && *(format + 2) != 'u' && *(format + 2) != 'o' && *(format + 2) != 'x' && *(format + 2) != 'X'))
 		{
