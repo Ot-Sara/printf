@@ -478,28 +478,28 @@ int _printf(const char *format, ...)
 			format = format + 3; }
 		else if (*format == '%' && *(format + 1) == '*' && (*(format + 2) == 'd' || *(format + 2) == 'i'))
 		{	fw = va_arg(ap, int);
-			ui = va_arg(ap, long int);
-			if (ui >= 0)
+			nbr = va_arg(ap, int);
+			if (nbr >= 0)
 			{
-				ns = _to_add_pos(fw, ui);
+				ns = _to_add_pos(fw, nbr);
 				while (ns)
 				{	c = ' ';
 					write(1, &c, 1);
 					len++;
 					ns--;
 				}
-				len = _print_positif_int(len, ui);
+				len = _print_positif_int(len, nbr);
 			}
 			else
 			{
-				ns = _to_add_neg(fw, ui);
+				ns = _to_add_neg(fw, nbr);
 				while (ns)
 				{	c = ' ';
 					write(1, &c, 1);
 					len++;
 					ns--;
 				}
-				len = _print_negatif_int(len, ui);
+				len = _print_negatif_int(len, nbr);
 			}
 			format = format + 3; }
 		else if (*format == '%' && *(format + 1) == '*' && *(format + 2) == 'u')
@@ -607,7 +607,7 @@ int _printf(const char *format, ...)
 			}
 			else if (*(format + 2) == 'x')
 			{
-				ns = _to_add_oxX(fw, ui);
+				ns = _to_add_oxX((*(format + 1) - 48), ui);
                                 if (ns > 0 && ui > 9)
 					ns++;
 				while (ns)
@@ -620,7 +620,7 @@ int _printf(const char *format, ...)
 			}
 			else
 			{	
-				ns = _to_add_oxX(fw, ui);
+				ns = _to_add_oxX((*(format + 1) - 48), ui);
 				if (ns > 0 && ui > 9)
 					ns++;
                                 while (ns)
