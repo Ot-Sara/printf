@@ -49,10 +49,10 @@ int _print_negatif_int(int len, long int n)
  *
  * Return: new length after printing
  */
-int _print_positif_int(int len, long int n)
+int _print_positif_int(int len, unsigned long int n)
 {
-	long int i = 1;
-	long int nbr = n;
+	unsigned long int i = 1;
+	unsigned long int nbr = n;
 	char c;
 
 	if (n < 10)
