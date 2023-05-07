@@ -228,7 +228,7 @@ int _printf(const char *format, ...)
 	/**float b;*/
 	va_list ap;
 	long int ui;
-	unsigned long n;
+	/**unsigned long n;*/
 
 	if (format == NULL || *format == '\0')
 	{
@@ -286,10 +286,10 @@ int _printf(const char *format, ...)
 		}
 		else if (*format == '%' && (*(format + 1) == 'l' || *(format + 1) == 'h' ) && *(format + 2) == 'u')
 		{
-			n = va_arg(ap, unsigned long int);
-			if (n > UINT_MAX)
-				n = n - UINT_MAX - 1;
-			len = _print_positif_int(len, n);
+			ui = va_arg(ap, long int);
+			if (ui > UINT_MAX)
+				ui = ui - UINT_MAX - 1;
+			len = _print_positif_int(len, ui);
 			format = format + 3;
 		}
 		else if (*format == '%' && *(format + 1) == 'u')
