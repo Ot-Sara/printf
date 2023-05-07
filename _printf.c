@@ -452,28 +452,28 @@ int _printf(const char *format, ...)
 			format = format + 3;
 		}
 		else if (*format == '%' && _isdigit(*(format + 1)) && (*(format + 2) == 'd' || *(format + 2) == 'i'))
-		{	ui = va_arg(ap, long int);
-			if (ui >= 0)
+		{	nbr = va_arg(ap, int);
+			if (nbr >= 0)
 			{
-				ns = _to_add_pos((*(format + 1) - 48), ui);
+				ns = _to_add_pos((*(format + 1) - 48), nbr);
 				while (ns)
 				{	c = ' ';
 					write(1, &c, 1);
 					len++;
 					ns--;
 				}
-				len = _print_positif_int(len, ui);
+				len = _print_positif_int(len, nbr);
 			}
 			else
 			{
-				ns = _to_add_neg((*(format + 1) - 48), ui);
+				ns = _to_add_neg((*(format + 1) - 48), nbr);
 				while (ns)
 				{	c = ' ';
 					write(1, &c, 1);
 					len++;
 					ns--;
 				}
-				len = _print_negatif_int(len, ui);
+				len = _print_negatif_int(len, nbr);
 			}
 			format = format + 3; }
 		else if (*format == '%' && *(format + 1) == '*' && (*(format + 2) == 'd' || *(format + 2) == 'i'))
