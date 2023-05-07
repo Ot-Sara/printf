@@ -390,22 +390,22 @@ int _printf(const char *format, ...)
 		}
 		else if (*format == '%' && (*(format + 1) == ' ' || *(format + 1) == '+')&& (*(format + 2) == 'd' || *(format + 2) == 'i'))
 		{
-			ui = va_arg(ap, long int);
-			if (ui >= 0)
+			nbr = va_arg(ap, int);
+			if (nbr >= 0)
 			{
 				c = *(format + 1);
 				write(1, &c, 1);
 				len++;
-				len = _print_positif_int(len, ui);
+				len = _print_positif_int(len, nbr);
 			}
 			else
-				len = _print_negatif_int(len, ui);
+				len = _print_negatif_int(len, nbr);
 			format = format + 3;
 		}
 		else if (*format == '%' && (((*(format + 1) == ' ' && *(format + 2) == '+') || (*(format + 1) == '+' && *(format + 2) == ' ')) && (*(format + 3) == 'd' || *(format + 3) == 'i')))
 		{
-			ui = va_arg(ap, long int);
-			if (ui >= 0)
+			nbr = va_arg(ap, int);
+			if (nbr >= 0)
 			{
 				if (*(format + 1) == ' ')
 				{
@@ -416,10 +416,10 @@ int _printf(const char *format, ...)
 				c = '+';
 				write(1, &c, 1);
 				len++;
-				len = _print_positif_int(len, ui);
+				len = _print_positif_int(len, nbr);
 			}
 			else
-				len = _print_negatif_int(len, ui);
+				len = _print_negatif_int(len, nbr);
 			format = format + 4;
 		}
 		else if (*format == '%' && *(format + 1) == '#' && (*(format + 2) == 'o' || *(format + 2) == 'x' || *(format + 2) == 'X'))
