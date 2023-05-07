@@ -246,8 +246,14 @@ int _printf(const char *format, ...)
 	&& ((*(format + 2) != ' ' && *(format + 2) != '+') || (*(format + 3) != 'd' && *(format + 3) != 'i')) && ((*(format + 2) != ' ' || *(format + 3) != '+') && (*(format + 2) != '+' || *(format + 3) != ' '))
 	&& (((*(format + 2) != ' ' || *(format + 3) != '+') && (*(format + 2) != '+' || *(format + 3) != ' ')) || (*(format + 4) != 'd' && *(format + 4) != 'i' )) 
        	&& ((*(format + 2) != '#') || (*(format + 3) != 'o' && *(format + 3) != 'x' && *(format + 3) != 'X')) /**&& (*(format + 2) != '.' && !_isdigit(*(format + 3)) && *(format + 4) != 'f')*/)
-		{	len = _print_char(len, format);
+		{
+			len = _print_char(len, format);
 			format = format + 2; }
+		else if (*format == '%' && *(format + 1) == '%' && *(format + 2) == '%')
+		{
+			len = _print_char(len, format);
+			format = format + 2;
+		}
 		else if (*format == '%' && *(format + 1) == ' ' && *(format + 2) == '%' && *(format + 3) == ' ' && ((*(format + 4) != 'd' && *(format + 4) != 'i') && (*(format + 4) != '+' || (*(format + 5) != 'd' && *(format + 5) != 'i')))) 
 		{	len = _print_char(len, format);
 			len = _print_char(len, format + 1);
@@ -672,7 +678,8 @@ int _printf(const char *format, ...)
 		}*/
 
 		else
-		{	len = _print_char(len, format);
+		{
+			len = _print_char(len, format);
 			format++; } }
 	va_end(ap);
 	return (len); }
