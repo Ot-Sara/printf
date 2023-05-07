@@ -262,11 +262,13 @@ int _printf(const char *format, ...)
 
 
 		else if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == 'i'))
-		{	n = va_arg(ap, int);
-			if (n >= 0)
-				len = _print_positif_int(len, n);
+		{	ui = va_arg(ap, long int);
+			if (ui >= 0)
+				len = _print_positif_int(len, ui);
 			else
-				len = _print_negatif_int(len, n);
+			{	printf("%ld ici", ui);
+				len = _print_negatif_int(len, ui);
+			}
 			format = format + 2; }
 		else if (*format == '%' && (*(format + 1) == 'l' || *(format + 1) == 'h') && ( *(format + 2) != 'd' && *(format + 2) != 'i' && *(format + 2) != 'u' && *(format + 2) != 'o' && *(format + 2) != 'x' && *(format + 2) != 'X'))
 		{

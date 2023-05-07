@@ -9,41 +9,37 @@
  *
  * Return: new length after printing
  */
-int _print_negatif_int(int len, int n)
+int _print_negatif_int(int len, long int n)
 {
-	int nbr;
-	int i = 1;
+	long int i = 1;
+	long int nbr = n;
 	char c;
 
 	c = '-';
 	write(1, &c, 1);
 	len++;
-	nbr = n;
-	if (nbr > -10)
-	{	c = -nbr + '0';
-		write(1, &c, 1);
-		len++;
-		return (len); }
-	while (nbr / 10)
+	if (n > -10)
 	{
-		while (nbr / 10)
-		{	nbr = nbr / 10;
-			i = i * 10; }
-		c = -nbr + '0';
+		c = -n + '0';
 		write(1, &c, 1);
 		len++;
-		nbr = n % i;
-		while (-nbr < (i / 10))
-		{	i = i / 10;
-			c = '0';
-			write(1, &c, 1);
-			len++;
-			nbr = nbr % i; }
-		i = 1; }
-	if (nbr != 0)
-	{	c = (-(nbr % 10)) + '0';
+		return (len);
+	}
+	while (n / 10)
+	{	n = n / 10;
+		i = i * 10;
+	}
+	while(i >= 10)
+	{
+		c = -(nbr / i) + '0';
 		write(1, &c, 1);
-		len++; }
+		len++;
+		nbr = nbr % i;
+		i = i / 10;
+	}
+	c = -nbr + '0';
+	write(1, &c, 1);
+	len++;
 	return (len);
 }
 /**
