@@ -275,7 +275,7 @@ int _printf(const char *format, ...)
 			format = format + 2;
 
 		}
-		else if (*format == '%' && (*(format + 1) == 'l' || *(format + 1) == 'h') && (*(format + 2) == 'd' || *(format + 2) == 'i'))
+		else if (*format == '%' && *(format + 1) == 'l' && (*(format + 2) == 'd' || *(format + 2) == 'i'))
 		{
 			ui = va_arg(ap, long int);
 			if (ui >= 0)
@@ -284,6 +284,15 @@ int _printf(const char *format, ...)
 				len = _print_negatif_int(len, ui);
 			format = format + 3;
 		}
+		else if (*format == '%' && *(format + 1) == 'h' && (*(format + 2) == 'd' || *(format + 2) == 'i'))
+			 {
+				 nbr = va_arg(ap, int);
+				 if (nbr >= 0)
+					 len = _print_positif_int(len, nbr);
+				 else
+					 len = _print_negatif_int(len, nbr);
+				 format = format + 3;
+			 }
 		else if (*format == '%' && (*(format + 1) == 'l' || *(format + 1) == 'h' ) && *(format + 2) == 'u')
 		{
 			n = va_arg(ap, unsigned long int);
