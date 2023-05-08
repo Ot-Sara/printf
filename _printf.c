@@ -9,7 +9,7 @@
  *
  * Return: new length after printing
  */
-int _print_nil(int len)
+/**int _print_nil(int len)
 {
 	char c;
 	c = '(';
@@ -31,7 +31,7 @@ int _print_nil(int len)
  * ui: long int
  *
  * Return: number of spaces that should be printed
- */
+
 int _to_add_pos(int fw, long int n)
 {
 	long int nbr;
@@ -59,14 +59,14 @@ int _to_add_pos(int fw, long int n)
 		return (0);
 	else
 		return (fw - d);
-}
+}*/
 /**
  * _to_add_pos- spaces to add to reach field width for negatif int
  * @f_w:  field width
  * ui: long int
  *
  * Return: number of spaces that should be printed
- */
+
 int _to_add_neg(int fw, long int n)
 {
 	long int nbr;
@@ -94,14 +94,14 @@ int _to_add_neg(int fw, long int n)
                 return (0);
         else
                 return (fw - d);
-}
+}*/
 /**
  * _to_add_oxX- spaces to add to reach field width for oct, hexa, and HEXA
  * @fw: field width
  * @n: number to print in (octal, hexadecimal or HEXADECIMAL)
  *
  * Return: number of spaces to print
- */
+
 int _to_add_oxX(int fw, long int n)
 {
 	int i = 0;
@@ -116,14 +116,14 @@ int _to_add_oxX(int fw, long int n)
 		return (0);
 	else
 		return (fw - i);
-}
+}*/
 /**
  * _to_add_string: spaces to add to reach field width
  * @fw: field width
  * @s: string to print
  *
  * Return: number of spaces to print
- */
+ 
 int _to_add_string(int fw, char *s)
 {
 	int d = 0;
@@ -136,13 +136,13 @@ int _to_add_string(int fw, char *s)
 		return (0);
 	else
 		return (fw - d);
-}
+}*/
 /**
  * _isdigit- checks for a digit (0 through 9).
  * @c: Integer to check
  *
  * Return: 1 if c is a digit 0 otherwise
- */
+
 int _isdigit(int c)
 {
 	int i = '0';
@@ -159,7 +159,7 @@ int _isdigit(int c)
 			i++;
 	}
 	return (find);
-}
+}*/
 /**
  * _precision- prints float with precision
  * @len: length of what preceds
