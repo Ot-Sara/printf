@@ -17,4 +17,10 @@ int _convert_hex(int len, unsigned long int n);
 int _convert_HEX(int len, unsigned long int n);
 int _print_s_specifier(int len, char *p);
 int _print_nil(int len);
+int _to_add_pos(int fw, long int n);
+int _to_add_neg(int fw, long int n);
+int _to_add_oxX(int fw, long int n);
+int _to_add_string(int fw, char *s);
+int _isdigit(int c);
+int err(int len);
 #endif /* MAIN_H */
