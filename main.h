@@ -2,6 +2,9 @@
 #define MAIN_H
 #include <limits.h>
 #include <stdio.h>
+#include <stdarg.h>
+#include <unistd.h>
+#include <stdlib.h>
 int _printf(const char *format, ...);
 int _print_string(int len, char *p);
 int _print_positif_int(int len, unsigned long int n);
