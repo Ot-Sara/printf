@@ -8,12 +8,12 @@
  * @len: length of what preceds
  * Return: new length after printing
  */
-int _convert_oct(int len, long int n)
+int _convert_oct(int len, unsigned long int n)
 {
 	int *p;
 	char b;
 	int i = 0, j = 0;
-	long int nbr;
+	unsigned long int nbr;
 
 	if (n == 0)
 	{
