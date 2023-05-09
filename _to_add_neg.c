@@ -18,7 +18,7 @@ int _to_add_neg(int fw, long int n)
 
 	d++;
 	nbr = n;
-	if (nbr > 10)
+	if (nbr > -10)
 		d++;
 	while (nbr / 10)
 	{
