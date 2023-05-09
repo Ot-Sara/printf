@@ -1,0 +1,3 @@
+NG_MAX);
+	len2 = printf("%ld", LONG_MAX);
+i

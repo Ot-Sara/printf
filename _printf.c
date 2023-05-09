@@ -2,14 +2,13 @@
 #include <stdarg.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <stdio.h>
 /**
  * _print_nil- prints (nil)
  * @len: length of what preceds
  *
  * Return: new length after printing
  */
-/**int _print_nil(int len)
+int _print_nil(int len)
 {
 	char c;
 	c = '(';
@@ -25,12 +24,13 @@
 	len = len + 5;
 	return (len);
 }
-**
+/**
  * _to_add_pos- spaces to add to reach field width for positif int
  * @f_w:  field width
  * ui: long int
  *
  * Return: number of spaces that should be printed
+ */
 
 int _to_add_pos(int fw, long int n)
 {
@@ -59,13 +59,14 @@ int _to_add_pos(int fw, long int n)
 		return (0);
 	else
 		return (fw - d);
-}*/
+}
 /**
  * _to_add_pos- spaces to add to reach field width for negatif int
  * @f_w:  field width
  * ui: long int
  *
  * Return: number of spaces that should be printed
+ */
 
 int _to_add_neg(int fw, long int n)
 {
@@ -94,13 +95,14 @@ int _to_add_neg(int fw, long int n)
                 return (0);
         else
                 return (fw - d);
-}*/
+}
 /**
  * _to_add_oxX- spaces to add to reach field width for oct, hexa, and HEXA
  * @fw: field width
  * @n: number to print in (octal, hexadecimal or HEXADECIMAL)
  *
  * Return: number of spaces to print
+ */
 
 int _to_add_oxX(int fw, long int n)
 {
@@ -116,13 +118,14 @@ int _to_add_oxX(int fw, long int n)
 		return (0);
 	else
 		return (fw - i);
-}*/
+}
 /**
  * _to_add_string: spaces to add to reach field width
  * @fw: field width
  * @s: string to print
  *
  * Return: number of spaces to print
+ */
  
 int _to_add_string(int fw, char *s)
 {
@@ -136,12 +139,13 @@ int _to_add_string(int fw, char *s)
 		return (0);
 	else
 		return (fw - d);
-}*/
+}
 /**
  * _isdigit- checks for a digit (0 through 9).
  * @c: Integer to check
  *
  * Return: 1 if c is a digit 0 otherwise
+ */
 
 int _isdigit(int c)
 {
@@ -159,7 +163,7 @@ int _isdigit(int c)
 			i++;
 	}
 	return (find);
-}*/
+}
 /**
  * _precision- prints float with precision
  * @len: length of what preceds
@@ -167,6 +171,7 @@ int _isdigit(int c)
  * @b: float to print
  *
  * Return: new length after printing
+
 int _precision(int len, int pr, float b)
 {
 	int nbr;
@@ -194,8 +199,6 @@ int _precision(int len, int pr, float b)
 	return (len);
 }
 */
-/**
- * */
 int err(int len)
 {
 	char c = '0';
